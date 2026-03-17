@@ -2,7 +2,7 @@
 
 **Lead intelligence CLI for developers and AI agents** -- Discover leads, manage subscriptions, and automate workflows from the terminal.
 
-The Signals CLI provides a command-line interface to the [Signals](https://api.meetsignals.ai) API, enabling developers and AI agents to monitor sources (LinkedIn, funding databases, etc.) and discover new leads programmatically.
+The Signals CLI provides a command-line interface to the [Signals](https://signals.sortlist.com/) API, enabling developers and AI agents to monitor sources (LinkedIn, funding databases, etc.) and discover new leads programmatically.
 
 ---
 
