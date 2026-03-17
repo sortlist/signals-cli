@@ -1,0 +1,57 @@
+{
+  "name": "signals-cli",
+  "version": "1.0.0",
+  "description": "Signals CLI - Command line interface for the Signals lead intelligence API. Discover leads, manage subscriptions, and automate workflows from the terminal or AI agents.",
+  "main": "dist/index.js",
+  "bin": {
+    "signals": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "start": "node ./dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "SKILL.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "signals",
+    "cli",
+    "leads",
+    "lead-generation",
+    "sales-intelligence",
+    "automation",
+    "ai-agent",
+    "claude-code",
+    "openclaw",
+    "clawhub",
+    "command-line"
+  ],
+  "author": "Sortlist",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sortlist/signals-cli.git"
+  },
+  "homepage": "https://github.com/sortlist/signals-cli#readme",
+  "bugs": {
+    "url": "https://github.com/sortlist/signals-cli/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/yargs": "^17.0.32",
+    "tsup": "^8.5.1",
+    "typescript": "^5.3.3"
+  }
+}
