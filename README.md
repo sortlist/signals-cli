@@ -9,7 +9,7 @@ The Signals CLI provides a command-line interface to the [Signals](https://api.m
 ## Installation
 
 ```bash
-npm install -g signals-cli
+npm install -g signals-sortlist-cli
 ```
 
 ---

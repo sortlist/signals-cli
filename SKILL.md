@@ -5,7 +5,7 @@ Signals is a lead intelligence platform that monitors sources (LinkedIn, funding
 ## Setup
 
 ```bash
-npm install -g signals-cli
+npm install -g signals-sortlist-cli
 export SIGNALS_API_KEY=your_api_key
 ```
 
