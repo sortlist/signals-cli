@@ -4,7 +4,7 @@
   "description": "Signals CLI - Command line interface for the Signals lead intelligence API. Discover leads, manage subscriptions, and automate workflows from the terminal or AI agents.",
   "main": "dist/index.js",
   "bin": {
-    "signals": "./dist/index.js"
+    "signals": "dist/index.js"
   },
   "scripts": {
     "dev": "tsup --watch",
@@ -35,7 +35,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sortlist/signals-cli.git"
+    "url": "git+https://github.com/sortlist/signals-cli.git"
   },
   "homepage": "https://github.com/sortlist/signals-cli#readme",
   "bugs": {
