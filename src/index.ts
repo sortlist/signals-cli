@@ -1,7 +1,7 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { listSignals, getSignal } from './commands/signals';
-import { listBusinesses, getBusiness, createBusiness } from './commands/businesses';
+import { listBusinesses, getBusiness, createBusiness, updateBusiness } from './commands/businesses';
 import { listSubscriptions, getSubscription, createSubscription, updateSubscription, pauseSubscription, resumeSubscription, deleteSubscription } from './commands/subscriptions';
 import { listLeads, getLead, deleteLead } from './commands/leads';
 import { listWebhooks, createWebhook, deleteWebhook } from './commands/webhooks';
@@ -90,6 +90,30 @@ yargs(hideBin(process.argv))
         );
     },
     createBusiness as any
+  )
+  .command(
+    'businesses:update <id>',
+    'Update a business and/or its Ideal Customer Profile',
+    (yargs: Argv) => {
+      return yargs
+        .positional('id', { describe: 'Business ID', type: 'string' })
+        .option('name', { describe: 'Business name', type: 'string' })
+        .option('website', { describe: 'Website URL', type: 'string' })
+        .option('description', { describe: 'Business description', type: 'string' })
+        .option('icp', {
+          describe: 'ICP attributes as JSON string (include "id" field to update existing ICP)',
+          type: 'string',
+        })
+        .example(
+          '$0 businesses:update 1 --name "New Name"',
+          'Rename a business'
+        )
+        .example(
+          '$0 businesses:update 1 --icp \'{"id":1,"target_job_titles":["CTO","VP Engineering"],"lead_matching_mode":70}\'',
+          'Update ICP'
+        );
+    },
+    updateBusiness as any
   )
 
   // ── Subscriptions ──

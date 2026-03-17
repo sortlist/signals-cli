@@ -70,6 +70,13 @@ export class SignalsAPI {
     });
   }
 
+  async updateBusiness(id: string, data: { name?: string; website?: string; description?: string; ideal_customer_profile_attributes?: Record<string, any> }) {
+    return this.request(`/businesses/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
   // Subscriptions (scoped to a business)
 
   async listSubscriptions(businessId: string) {
