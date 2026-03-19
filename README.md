@@ -14,12 +14,26 @@ npm install -g signals-sortlist-cli
 
 ---
 
-## Setup
+## Authentication
 
-Set your API key (get it from **Settings > API Keys** in your Signals dashboard):
+The recommended way to authenticate is the interactive login command:
+
+```bash
+signals login
+```
+
+This prompts for your API key (get it from **Settings > API Keys** in your dashboard), validates it, and saves it to `~/.signals/config.json`.
+
+Alternatively, set the `SIGNALS_API_KEY` environment variable (takes priority over saved config):
 
 ```bash
 export SIGNALS_API_KEY=your_api_key
+```
+
+To remove saved credentials:
+
+```bash
+signals logout
 ```
 
 API keys are scoped to your **team**. Use `--business` (`-b`) to specify which business to operate on for leads, subscriptions, and webhooks.
@@ -70,6 +84,23 @@ signals businesses:create --name "Acme Corp" \
 | `--name` | Conditional | Business name (required when not using website-only mode) |
 | `--description` | No | Short description |
 | `--icp` | No | Ideal Customer Profile attributes as JSON string |
+
+```bash
+# Update a business name
+signals businesses:update 1 --name "New Name"
+
+# Update the ICP (include the ICP id from businesses:get response)
+signals businesses:update 1 --icp '{"id":1,"target_job_titles":["CTO","VP Engineering"],"lead_matching_mode":70}'
+```
+
+**`businesses:update` options:**
+
+| Option | Description |
+|---|---|
+| `--name` | Business name |
+| `--website` | Website URL |
+| `--description` | Short description |
+| `--icp` | ICP attributes as JSON string (include `id` to update existing ICP) |
 
 ### Subscriptions
 
@@ -239,7 +270,7 @@ All output is JSON on stdout, errors go to stderr with exit code 1.
 
 | Variable | Required | Description |
 |---|---|---|
-| `SIGNALS_API_KEY` | Yes | Your Signals API key |
+| `SIGNALS_API_KEY` | No | Your Signals API key (overrides saved config from `signals login`) |
 
 ---
 
@@ -275,10 +306,11 @@ npm run build  # Production build
 src/
   index.ts              # CLI entry point (yargs)
   api.ts                # SignalsAPI client class
-  config.ts             # Environment configuration
+  config.ts             # Config management (~/.signals/config.json)
   commands/
+    login.ts            # login, logout
     signals.ts          # signals:list, signals:get
-    businesses.ts       # businesses:list, businesses:get, businesses:create
+    businesses.ts       # businesses:list, businesses:get, businesses:create, businesses:update
     subscriptions.ts    # Subscription management
     leads.ts            # Lead management
     webhooks.ts         # Webhook management

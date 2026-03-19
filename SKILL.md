@@ -6,7 +6,8 @@ Signals is a lead intelligence platform that monitors sources (LinkedIn, funding
 
 ```bash
 npm install -g signals-sortlist-cli
-export SIGNALS_API_KEY=your_api_key
+signals login
+# Or set env var: export SIGNALS_API_KEY=your_api_key
 ```
 
 ## Concepts
@@ -39,6 +40,10 @@ signals businesses:create --website https://acme.com
 # Create a business manually
 signals businesses:create --name <name> [--website <url>] [--description <text>] [--icp '<json>']
 signals businesses:create --name "Acme Corp" --website https://acme.com
+
+# Update a business or its ICP
+signals businesses:update <id> [--name <name>] [--website <url>] [--description <text>] [--icp '<json>']
+signals businesses:update 1 --icp '{"id":1,"target_job_titles":["CTO"],"lead_matching_mode":70}'
 ```
 
 ### Signals (read-only catalog)
@@ -188,4 +193,4 @@ signals subscriptions:resume 42 --business 1
 
 | Variable | Required | Description |
 |---|---|---|
-| `SIGNALS_API_KEY` | Yes | Your Signals API key (Bearer token) |
+| `SIGNALS_API_KEY` | No | Your Signals API key (overrides saved config from `signals login`) |
