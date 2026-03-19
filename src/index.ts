@@ -1,5 +1,6 @@
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { login, logout } from './commands/login';
 import { listSignals, getSignal } from './commands/signals';
 import { listBusinesses, getBusiness, createBusiness, updateBusiness } from './commands/businesses';
 import { listSubscriptions, getSubscription, createSubscription, updateSubscription, pauseSubscription, resumeSubscription, deleteSubscription } from './commands/subscriptions';
@@ -18,6 +19,21 @@ const businessOption = (yargs: Argv) =>
 yargs(hideBin(process.argv))
   .scriptName('signals')
   .usage('$0 <command> [options]')
+
+  // ── Auth ──
+
+  .command(
+    'login',
+    'Authenticate with your Signals API key',
+    {},
+    login as any
+  )
+  .command(
+    'logout',
+    'Remove saved API key',
+    {},
+    logout as any
+  )
 
   // ── Signals ──
 
