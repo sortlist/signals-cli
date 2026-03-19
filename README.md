@@ -1,8 +1,3 @@
----
-name: signals-cli
-description: Signals CLI skill — Monitor sources (LinkedIn, funding databases, etc.) and discover new leads programmatically
----
-
 # Signals CLI
 
 [![npm](https://img.shields.io/npm/v/signals-sortlist-cli)](https://www.npmjs.com/package/signals-sortlist-cli) [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)

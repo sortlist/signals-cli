@@ -1,3 +1,8 @@
+---
+name: signals-cli
+description: Signals CLI skill — Monitor sources (LinkedIn, funding databases, etc.) and discover new leads programmatically
+---
+
 # Signals CLI Skill
 
 Signals is a lead intelligence platform that monitors sources (LinkedIn, funding databases, etc.) and discovers new leads for sales teams. This CLI lets you manage businesses, signals, subscriptions, leads, and webhooks from the terminal.
