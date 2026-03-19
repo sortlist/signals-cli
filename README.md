@@ -12,6 +12,16 @@ The Signals CLI provides a command-line interface to the [Signals](https://signa
 npm install -g signals-sortlist-cli
 ```
 
+### For AI Agents
+
+Install the Signals skill for your AI agent (Cursor, Claude Code, OpenClaw, etc.):
+
+```bash
+npx skills add sortlist/signals-cli
+```
+
+This installs the [SKILL.md](SKILL.md) which gives your agent full knowledge of the CLI commands, patterns, and workflows.
+
 ---
 
 ## Authentication
@@ -255,20 +265,6 @@ signals webhooks:create --business 1 --url https://my-app.com/signals --secret m
 # Verify
 signals webhooks:list --business 1
 ```
-
----
-
-## For AI Agents
-
-Install the Signals skill for your AI agent (Cursor, Claude Code, OpenClaw, etc.):
-
-```bash
-npx skills add sortlist/signals-cli
-```
-
-This installs the [SKILL.md](SKILL.md) which gives your agent full knowledge of the CLI commands, patterns, and workflows.
-
-All output is JSON on stdout, errors go to stderr with exit code 1 — making it easy to pipe into `jq` or consume from any agent framework.
 
 ---
 
