@@ -260,9 +260,15 @@ signals webhooks:list --business 1
 
 ## For AI Agents
 
-This CLI is designed to work with AI coding agents like Claude Code, OpenClaw, and Clawhub. See [SKILL.md](SKILL.md) for the complete skill reference with patterns and examples.
+Install the Signals skill for your AI agent (Cursor, Claude Code, OpenClaw, etc.):
 
-All output is JSON on stdout, errors go to stderr with exit code 1.
+```bash
+npx skills add sortlist/signals-cli
+```
+
+This installs the [SKILL.md](SKILL.md) which gives your agent full knowledge of the CLI commands, patterns, and workflows.
+
+All output is JSON on stdout, errors go to stderr with exit code 1 — making it easy to pipe into `jq` or consume from any agent framework.
 
 ---
 
