@@ -1,5 +1,7 @@
 # Signals CLI
 
+[![npm](https://img.shields.io/npm/v/signals-sortlist-cli)](https://www.npmjs.com/package/signals-sortlist-cli) [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
+
 **Lead intelligence CLI for developers and AI agents** -- Discover leads, manage subscriptions, and automate workflows from the terminal.
 
 The Signals CLI provides a command-line interface to the [Signals](https://signals.sortlist.com/) API, enabling developers and AI agents to monitor sources (LinkedIn, funding databases, etc.) and discover new leads programmatically.
