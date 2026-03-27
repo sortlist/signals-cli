@@ -32,7 +32,7 @@ export async function getSubscription(args: { business: string; id: string }) {
   }
 }
 
-export async function createSubscription(args: { business: string; signal: string; name: string; config?: string; integrations?: string }) {
+export async function createSubscription(args: { business: string; signal: string; name: string; config?: string; 'daily-lead-limit'?: number; integrations?: string }) {
   const config = getConfig();
   const api = new SignalsAPI(config);
 
@@ -70,6 +70,7 @@ export async function createSubscription(args: { business: string; signal: strin
       signal_slug: args.signal,
       name: args.name,
       config: parsedConfig,
+      daily_lead_limit: args['daily-lead-limit'],
       integrations: parsedIntegrations,
     });
     console.log(JSON.stringify(result, null, 2));
@@ -79,7 +80,7 @@ export async function createSubscription(args: { business: string; signal: strin
   }
 }
 
-export async function updateSubscription(args: { business: string; id: string; name?: string; active?: boolean; config?: string; integrations?: string }) {
+export async function updateSubscription(args: { business: string; id: string; name?: string; active?: boolean; config?: string; 'daily-lead-limit'?: number; integrations?: string }) {
   const config = getConfig();
   const api = new SignalsAPI(config);
 
@@ -88,9 +89,10 @@ export async function updateSubscription(args: { business: string; id: string; n
     process.exit(1);
   }
 
-  const data: { name?: string; active?: boolean; config?: Record<string, any>; integrations?: Array<{ integration_id: number; auto_deliver?: boolean; overloop_campaign_id?: string; overloop_campaign_name?: string }> } = {};
+  const data: { name?: string; active?: boolean; config?: Record<string, any>; daily_lead_limit?: number; integrations?: Array<{ integration_id: number; auto_deliver?: boolean; overloop_campaign_id?: string; overloop_campaign_name?: string }> } = {};
   if (args.name !== undefined) data.name = args.name;
   if (args.active !== undefined) data.active = args.active;
+  if (args['daily-lead-limit'] !== undefined) data.daily_lead_limit = args['daily-lead-limit'];
   if (args.config) {
     try {
       data.config = JSON.parse(args.config);

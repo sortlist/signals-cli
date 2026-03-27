@@ -76,8 +76,12 @@ signals subscriptions:get <id> --business <business_id>
 signals subscriptions:get 42 --business 1
 
 # Create a subscription
-signals subscriptions:create --business <id> --signal <slug> --name <name> [--config '<json>'] [--integrations '<json>']
+signals subscriptions:create --business <id> --signal <slug> --name <name> [--config '<json>'] [--daily-lead-limit <n>] [--integrations '<json>']
 signals subscriptions:create --business 1 --signal linkedin-company-engagers --name "Apple Engagers" --config '{"linkedin_url":"https://www.linkedin.com/company/apple/"}'
+
+# Create a subscription with a custom daily lead limit
+signals subscriptions:create --business 1 --signal linkedin-company-engagers --name "Apple Engagers" --daily-lead-limit 50 \
+  --config '{"linkedin_url":"https://www.linkedin.com/company/apple/"}'
 
 # Create a subscription with an Overloop integration linked
 signals subscriptions:create --business 1 --signal linkedin-company-engagers --name "Apple Engagers" \
@@ -85,8 +89,11 @@ signals subscriptions:create --business 1 --signal linkedin-company-engagers --n
   --integrations '[{"integration_id":5,"auto_deliver":true,"overloop_campaign_id":"abc123","overloop_campaign_name":"Q1 Outreach"}]'
 
 # Update a subscription
-signals subscriptions:update <id> --business <business_id> [--name <name>] [--active <bool>] [--config '<json>'] [--integrations '<json>']
+signals subscriptions:update <id> --business <business_id> [--name <name>] [--active <bool>] [--config '<json>'] [--daily-lead-limit <n>] [--integrations '<json>']
 signals subscriptions:update 42 --business 1 --name "New Name"
+
+# Change the daily lead limit
+signals subscriptions:update 42 --business 1 --daily-lead-limit 200
 
 # Link or update integrations on an existing subscription
 signals subscriptions:update 42 --business 1 \

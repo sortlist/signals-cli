@@ -170,6 +170,10 @@ yargs(hideBin(process.argv))
           describe: 'Signal-specific config as JSON string',
           type: 'string',
         })
+        .option('daily-lead-limit', {
+          describe: 'Maximum leads per day (default: 100)',
+          type: 'number',
+        })
         .option('integrations', {
           describe: 'Integrations config as JSON array (e.g. \'[{"integration_id":1,"auto_deliver":true,"overloop_campaign_id":"abc"}]\')',
           type: 'string',
@@ -190,6 +194,10 @@ yargs(hideBin(process.argv))
         .option('name', { describe: 'Updated name', type: 'string' })
         .option('active', { describe: 'Set active state', type: 'boolean' })
         .option('config', { describe: 'Updated config as JSON string', type: 'string' })
+        .option('daily-lead-limit', {
+          describe: 'Maximum leads per day (default: 100)',
+          type: 'number',
+        })
         .option('integrations', {
           describe: 'Integrations config as JSON array (e.g. \'[{"integration_id":1,"auto_deliver":true,"overloop_campaign_id":"abc"}]\')',
           type: 'string',
