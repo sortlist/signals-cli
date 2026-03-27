@@ -77,6 +77,16 @@ export class SignalsAPI {
     });
   }
 
+  // Integrations (scoped to a business)
+
+  async listIntegrations(businessId: string) {
+    return this.request(`${this.businessPath(businessId)}/integrations`, { method: 'GET' });
+  }
+
+  async listCampaigns(businessId: string, integrationId: string) {
+    return this.request(`${this.businessPath(businessId)}/integrations/${integrationId}/campaigns`, { method: 'GET' });
+  }
+
   // Subscriptions (scoped to a business)
 
   async listSubscriptions(businessId: string) {
@@ -87,14 +97,14 @@ export class SignalsAPI {
     return this.request(`${this.businessPath(businessId)}/subscriptions/${id}`, { method: 'GET' });
   }
 
-  async createSubscription(businessId: string, data: { signal_slug: string; name: string; config?: Record<string, any> }) {
+  async createSubscription(businessId: string, data: { signal_slug: string; name: string; config?: Record<string, any>; integrations?: Array<{ integration_id: number; auto_deliver?: boolean; overloop_campaign_id?: string; overloop_campaign_name?: string }> }) {
     return this.request(`${this.businessPath(businessId)}/subscriptions`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async updateSubscription(businessId: string, id: string, data: { name?: string; active?: boolean; config?: Record<string, any> }) {
+  async updateSubscription(businessId: string, id: string, data: { name?: string; active?: boolean; config?: Record<string, any>; integrations?: Array<{ integration_id: number; auto_deliver?: boolean; overloop_campaign_id?: string; overloop_campaign_name?: string }> }) {
     return this.request(`${this.businessPath(businessId)}/subscriptions/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(data),
@@ -129,6 +139,13 @@ export class SignalsAPI {
 
   async deleteLead(businessId: string, id: string) {
     return this.request(`${this.businessPath(businessId)}/leads/${id}`, { method: 'DELETE' });
+  }
+
+  async enrollLeads(businessId: string, data: { integration_id: number; campaign_id: string; lead_ids: number[] }) {
+    return this.request(`${this.businessPath(businessId)}/leads/enroll`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
   }
 
   // Webhooks (scoped to a business)

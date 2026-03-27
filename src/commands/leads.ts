@@ -52,3 +52,39 @@ export async function deleteLead(args: { business: string; id: string }) {
     process.exit(1);
   }
 }
+
+export async function enrollLeads(args: { business: string; integration: string; campaign: string; leads: string }) {
+  const config = getConfig();
+  const api = new SignalsAPI(config);
+
+  if (!args.integration) {
+    console.error('--integration (Overloop integration ID) is required.');
+    process.exit(1);
+  }
+  if (!args.campaign) {
+    console.error('--campaign (Overloop campaign ID) is required.');
+    process.exit(1);
+  }
+  if (!args.leads) {
+    console.error('--leads (comma-separated lead IDs) is required.');
+    process.exit(1);
+  }
+
+  const leadIds = args.leads.split(',').map((id) => parseInt(id.trim(), 10)).filter((id) => !isNaN(id));
+  if (leadIds.length === 0) {
+    console.error('No valid lead IDs provided.');
+    process.exit(1);
+  }
+
+  try {
+    const result = await api.enrollLeads(args.business, {
+      integration_id: parseInt(args.integration, 10),
+      campaign_id: args.campaign,
+      lead_ids: leadIds,
+    });
+    console.log(JSON.stringify(result, null, 2));
+  } catch (error: any) {
+    console.error('Failed to enroll leads:', error.message);
+    process.exit(1);
+  }
+}

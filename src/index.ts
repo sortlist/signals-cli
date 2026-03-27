@@ -4,7 +4,8 @@ import { login, logout } from './commands/login';
 import { listSignals, getSignal } from './commands/signals';
 import { listBusinesses, getBusiness, createBusiness, updateBusiness } from './commands/businesses';
 import { listSubscriptions, getSubscription, createSubscription, updateSubscription, pauseSubscription, resumeSubscription, deleteSubscription } from './commands/subscriptions';
-import { listLeads, getLead, deleteLead } from './commands/leads';
+import { listLeads, getLead, deleteLead, enrollLeads } from './commands/leads';
+import { listIntegrations, listCampaigns } from './commands/integrations';
 import { listWebhooks, createWebhook, deleteWebhook } from './commands/webhooks';
 import type { Argv } from 'yargs';
 
@@ -169,6 +170,10 @@ yargs(hideBin(process.argv))
           describe: 'Signal-specific config as JSON string',
           type: 'string',
         })
+        .option('integrations', {
+          describe: 'Integrations config as JSON array (e.g. \'[{"integration_id":1,"auto_deliver":true,"overloop_campaign_id":"abc"}]\')',
+          type: 'string',
+        })
         .example(
           '$0 subscriptions:create --business 1 --signal linkedin-company-engagers --name "Apple Engagers" --config \'{"linkedin_url":"https://www.linkedin.com/company/apple/"}\'',
           'Create a subscription'
@@ -185,6 +190,10 @@ yargs(hideBin(process.argv))
         .option('name', { describe: 'Updated name', type: 'string' })
         .option('active', { describe: 'Set active state', type: 'boolean' })
         .option('config', { describe: 'Updated config as JSON string', type: 'string' })
+        .option('integrations', {
+          describe: 'Integrations config as JSON array (e.g. \'[{"integration_id":1,"auto_deliver":true,"overloop_campaign_id":"abc"}]\')',
+          type: 'string',
+        })
         .example('$0 subscriptions:update 42 --business 1 --name "New Name"', 'Rename a subscription');
     },
     updateSubscription as any
@@ -220,6 +229,25 @@ yargs(hideBin(process.argv))
     deleteSubscription as any
   )
 
+  // ── Integrations ──
+
+  .command(
+    'integrations:list',
+    'List all integrations for a business',
+    (yargs: Argv) => businessOption(yargs),
+    listIntegrations as any
+  )
+  .command(
+    'integrations:campaigns <id>',
+    'List Overloop campaigns for an integration',
+    (yargs: Argv) => {
+      return businessOption(yargs)
+        .positional('id', { describe: 'Integration ID', type: 'string' })
+        .example('$0 integrations:campaigns 5 --business 1', 'List campaigns for integration 5');
+    },
+    listCampaigns as any
+  )
+
   // ── Leads ──
 
   .command(
@@ -253,6 +281,33 @@ yargs(hideBin(process.argv))
         .example('$0 leads:delete 1234 --business 1', 'Delete a lead');
     },
     deleteLead as any
+  )
+  .command(
+    'leads:enroll',
+    'Enroll leads into an Overloop campaign',
+    (yargs: Argv) => {
+      return businessOption(yargs)
+        .option('integration', {
+          describe: 'Overloop integration ID',
+          type: 'string',
+          demandOption: true,
+        })
+        .option('campaign', {
+          describe: 'Overloop campaign ID',
+          type: 'string',
+          demandOption: true,
+        })
+        .option('leads', {
+          describe: 'Comma-separated lead IDs',
+          type: 'string',
+          demandOption: true,
+        })
+        .example(
+          '$0 leads:enroll --business 1 --integration 5 --campaign abc123 --leads 100,101,102',
+          'Enroll leads into an Overloop campaign'
+        );
+    },
+    enrollLeads as any
   )
 
   // ── Webhooks ──

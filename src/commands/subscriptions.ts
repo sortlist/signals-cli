@@ -32,7 +32,7 @@ export async function getSubscription(args: { business: string; id: string }) {
   }
 }
 
-export async function createSubscription(args: { business: string; signal: string; name: string; config?: string }) {
+export async function createSubscription(args: { business: string; signal: string; name: string; config?: string; integrations?: string }) {
   const config = getConfig();
   const api = new SignalsAPI(config);
 
@@ -55,11 +55,22 @@ export async function createSubscription(args: { business: string; signal: strin
     }
   }
 
+  let parsedIntegrations: Array<{ integration_id: number; auto_deliver?: boolean; overloop_campaign_id?: string; overloop_campaign_name?: string }> | undefined;
+  if (args.integrations) {
+    try {
+      parsedIntegrations = JSON.parse(args.integrations);
+    } catch {
+      console.error('Failed to parse --integrations JSON:', args.integrations);
+      process.exit(1);
+    }
+  }
+
   try {
     const result = await api.createSubscription(args.business, {
       signal_slug: args.signal,
       name: args.name,
       config: parsedConfig,
+      integrations: parsedIntegrations,
     });
     console.log(JSON.stringify(result, null, 2));
   } catch (error: any) {
@@ -68,7 +79,7 @@ export async function createSubscription(args: { business: string; signal: strin
   }
 }
 
-export async function updateSubscription(args: { business: string; id: string; name?: string; active?: boolean; config?: string }) {
+export async function updateSubscription(args: { business: string; id: string; name?: string; active?: boolean; config?: string; integrations?: string }) {
   const config = getConfig();
   const api = new SignalsAPI(config);
 
@@ -77,7 +88,7 @@ export async function updateSubscription(args: { business: string; id: string; n
     process.exit(1);
   }
 
-  const data: { name?: string; active?: boolean; config?: Record<string, any> } = {};
+  const data: { name?: string; active?: boolean; config?: Record<string, any>; integrations?: Array<{ integration_id: number; auto_deliver?: boolean; overloop_campaign_id?: string; overloop_campaign_name?: string }> } = {};
   if (args.name !== undefined) data.name = args.name;
   if (args.active !== undefined) data.active = args.active;
   if (args.config) {
@@ -85,6 +96,14 @@ export async function updateSubscription(args: { business: string; id: string; n
       data.config = JSON.parse(args.config);
     } catch {
       console.error('Failed to parse --config JSON:', args.config);
+      process.exit(1);
+    }
+  }
+  if (args.integrations) {
+    try {
+      data.integrations = JSON.parse(args.integrations);
+    } catch {
+      console.error('Failed to parse --integrations JSON:', args.integrations);
       process.exit(1);
     }
   }
